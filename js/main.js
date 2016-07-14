@@ -4,16 +4,26 @@ import firebase from 'firebase';
 import angularfire from 'angularfire';
 import $ from 'jquery';
 
+//CTRL
+import DashCtrl from './ctrl/dash.ctrl';
 
-console.log('fire');
+//Config (Router)
+import config from './config';
 
 
-var config = {
-apiKey: "AIzaSyBcDhfji5499fBObaKQtVj2fygUdaE0xiI",
-authDomain: "angularfire-ab896.firebaseapp.com",
-databaseURL: "https://angularfire-ab896.firebaseio.com",
-storageBucket: "",
+var appConfig = {
+	apiKey: "AIzaSyBcDhfji5499fBObaKQtVj2fygUdaE0xiI",
+	authDomain: "angularfire-ab896.firebaseapp.com",
+	databaseURL: "https://angularfire-ab896.firebaseio.com",
+	storageBucket: "",
 };
-firebase.initializeApp(config);
+firebase.initializeApp(appConfig);
+
+angular
+	.module('app', ['ui.router', 'firebase'])
+	.config(config)
+	.controller('DashCtrl', DashCtrl)
+
+;
 
 
