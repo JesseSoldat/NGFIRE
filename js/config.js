@@ -10,8 +10,12 @@ let config = function($stateProvider, $urlRouterProvider){
 		.state('root.home', {
 			url: '/',
 			controller: 'DashCtrl as vm',
-			templateUrl: 'templates/home.html'
-			
+			templateUrl: 'templates/dash.html'	
+		})
+		.state('root.form', {
+			url: '/add',
+			controller: 'AddCharCtrl as vm',
+			templateUrl: 'templates/add-char.html'
 		})
 		;
 

@@ -6,6 +6,7 @@ import $ from 'jquery';
 
 //CTRL
 import DashCtrl from './ctrl/dash.ctrl';
+import AddCharCtrl from './ctrl/add-char.ctrl';
 
 //Config (Router)
 import config from './config';
@@ -23,6 +24,7 @@ angular
 	.module('app', ['ui.router', 'firebase'])
 	.config(config)
 	.controller('DashCtrl', DashCtrl)
+	.controller('AddCharCtrl', AddCharCtrl)
 
 ;
 
