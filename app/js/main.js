@@ -32,29 +32,29 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var AddCharCtrl = function AddCharCtrl($firebaseObject) {
+var AddCharCtrl = function AddCharCtrl($firebaseObject, $firebaseArray) {
+	var ref = firebase.database().ref();
+
+	var array = $firebaseArray(ref);
 
 	var vm = this;
 	this.addChar = addChar;
 
 	function sendData(id, name, url) {
-		firebase.database().ref('char/' + id).set({
+
+		array.$add({
 			name: name,
 			url: url
 		});
 	}
-	// addChar('1','Jesse', 'Soldat');
 
 	function addChar(obj) {
 		var id = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-		console.log(id);
 
 		sendData(id, obj.name, obj.url);
-
-		obj = "";
 	}
 };
-AddCharCtrl.$inject = ['$firebaseObject'];
+AddCharCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
 
 exports['default'] = AddCharCtrl;
 module.exports = exports['default'];
@@ -65,21 +65,17 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var DashCtrl = function DashCtrl($firebaseObject, $firebaseArray) {
+var DashCtrl = function DashCtrl($firebaseObject, $firebaseArray, $scope) {
 	var vm = this;
 
 	var ref = firebase.database().ref();
 
-	var data = $firebaseObject(ref);
-	var array = $firebaseArray(ref);
+	$scope.array = $firebaseArray(ref);
 
-	console.log(data);
-	console.log(array);
-
-	vm.arr = array;
+	console.log($scope.array);
 };
 
-DashCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
+DashCtrl.$inject = ['$firebaseObject', '$firebaseArray', '$scope'];
 
 exports['default'] = DashCtrl;
 module.exports = exports['default'];

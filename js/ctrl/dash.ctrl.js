@@ -1,21 +1,25 @@
-let DashCtrl = function($firebaseObject, $firebaseArray){
+let DashCtrl = function($firebaseObject, $firebaseArray, $scope){
 	let vm = this;
 	
 
 	var ref = firebase.database().ref();
 
-	let data = $firebaseObject(ref);
-	let array = $firebaseArray(ref);
 	
-	console.log(data);
-	console.log(array);
+	$scope.array = $firebaseArray(ref);
 
-	vm.arr = array;
+	console.log($scope.array);
+
+	
+
+	
+	
+
+
 
 	
 
 }
 
-DashCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
+DashCtrl.$inject = ['$firebaseObject', '$firebaseArray', '$scope'];
 
 export default DashCtrl;
