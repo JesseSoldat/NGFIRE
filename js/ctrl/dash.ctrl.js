@@ -1,10 +1,9 @@
-let DashCtrl = function($firebaseObject, $firebaseArray, $scope){
+let DashCtrl = function($firebaseArray, $scope, $state){
 	let vm = this;
 	
 
 	var ref = firebase.database().ref();
 
-	
 	let data = $firebaseArray(ref);
 	
 	$scope.array = data;
@@ -19,18 +18,23 @@ let DashCtrl = function($firebaseObject, $firebaseArray, $scope){
 	}
 
 	$scope.editChar = function(id){
-		var item = data.$getRecord(id);
-		item.name = "Jesse";
-		data.$save(item).then(function() {
-	 
-	});
+		
+		let item = data.$getRecord(id);
+		console.log(item);
 
+
+		// item.name = "Jesse";
+		// data.$save(item).then(function() {
+		// });
+		
 	}
+
+	
 
 	
 
 }
 
-DashCtrl.$inject = ['$firebaseObject', '$firebaseArray', '$scope'];
+DashCtrl.$inject = ['$firebaseArray', '$scope', '$state'];
 
 export default DashCtrl;

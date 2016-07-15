@@ -3,6 +3,7 @@
 		<h3>{{a.name}}</h3>
 		<button ng-click="deleteChar(a.$id)">Delete</button>
 		<button ng-click="editChar(a.$id)">Edit</button>
+		<a href="#/edit/{{a.$id}}"><button>Route</button></a>
 		<img ng-src="{{a.url}}">
 
 	</div>

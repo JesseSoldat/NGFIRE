@@ -19,6 +19,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
 		url: '/add',
 		controller: 'AddCharCtrl as vm',
 		templateUrl: 'templates/add-char.html'
+	}).state('root.edit', {
+		url: '/edit/:id',
+		controller: 'EditCharCtrl as vm',
+		templateUrl: 'templates/edit-char.html'
 	});
 };
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -64,7 +68,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var DashCtrl = function DashCtrl($firebaseObject, $firebaseArray, $scope) {
+var DashCtrl = function DashCtrl($firebaseArray, $scope, $state) {
 	var vm = this;
 
 	var ref = firebase.database().ref();
@@ -83,18 +87,62 @@ var DashCtrl = function DashCtrl($firebaseObject, $firebaseArray, $scope) {
 	};
 
 	$scope.editChar = function (id) {
+
 		var item = data.$getRecord(id);
-		item.name = "Jesse";
-		data.$save(item).then(function () {});
+		console.log(item);
+
+		// item.name = "Jesse";
+		// data.$save(item).then(function() {
+		// });
 	};
 };
 
-DashCtrl.$inject = ['$firebaseObject', '$firebaseArray', '$scope'];
+DashCtrl.$inject = ['$firebaseArray', '$scope', '$state'];
 
 exports['default'] = DashCtrl;
 module.exports = exports['default'];
 
 },{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams) {
+
+	var id = $stateParams.id;
+
+	var ref = firebase.database().ref();
+
+	var data = $firebaseArray(ref);
+
+	// console.log(data.length);
+	console.log(data);
+
+	setTimeout(function () {
+		getOne();
+	}, 2000);
+
+	function getOne() {
+		for (var i = 0; i < data.length; i++) {
+			console.log(data[i]);
+		}
+	}
+
+	function editChar() {
+		console.log(id);
+		var item = data.$getRecord(id);
+		console.log(item);
+		// item.name = "Jesse";
+		data.$save(item).then(function () {});
+	}
+	// editChar();
+};
+EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams'];
+exports['default'] = EditCharCtrl;
+module.exports = exports['default'];
+
+},{}],5:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -127,6 +175,10 @@ var _ctrlAddCharCtrl = require('./ctrl/add-char.ctrl');
 
 var _ctrlAddCharCtrl2 = _interopRequireDefault(_ctrlAddCharCtrl);
 
+var _ctrlEditCharCtrl = require('./ctrl/edit-char.ctrl');
+
+var _ctrlEditCharCtrl2 = _interopRequireDefault(_ctrlEditCharCtrl);
+
 //Config (Router)
 
 var _config = require('./config');
@@ -141,9 +193,9 @@ var appConfig = {
 };
 _firebase2['default'].initializeApp(appConfig);
 
-_angular2['default'].module('app', ['ui.router', 'firebase']).config(_config2['default']).controller('DashCtrl', _ctrlDashCtrl2['default']).controller('AddCharCtrl', _ctrlAddCharCtrl2['default']);
+_angular2['default'].module('app', ['ui.router', 'firebase']).config(_config2['default']).controller('DashCtrl', _ctrlDashCtrl2['default']).controller('AddCharCtrl', _ctrlAddCharCtrl2['default']).controller('EditCharCtrl', _ctrlEditCharCtrl2['default']);
 
-},{"./config":1,"./ctrl/add-char.ctrl":2,"./ctrl/dash.ctrl":3,"angular":7,"angular-ui-router":5,"angularfire":9,"firebase":10,"jquery":12}],5:[function(require,module,exports){
+},{"./config":1,"./ctrl/add-char.ctrl":2,"./ctrl/dash.ctrl":3,"./ctrl/edit-char.ctrl":4,"angular":8,"angular-ui-router":6,"angularfire":10,"firebase":11,"jquery":13}],6:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -4720,7 +4772,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -36194,11 +36246,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}],8:[function(require,module,exports){
+},{"./angular":7}],9:[function(require,module,exports){
 /*!
  * AngularFire is the officially supported AngularJS binding for Firebase. Firebase
  * is a full backend so you don't need servers to build your Angular app. AngularFire
@@ -38457,7 +38509,7 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     }
 })();
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 // Make sure dependencies are loaded on the window
 require('angular');
 require('firebase');
@@ -38468,7 +38520,7 @@ require('./dist/angularfire');
 // Export the module name from the Angular module
 module.exports = 'firebase';
 
-},{"./dist/angularfire":8,"angular":7,"firebase":10}],10:[function(require,module,exports){
+},{"./dist/angularfire":9,"angular":8,"firebase":11}],11:[function(require,module,exports){
 /**
  *  Firebase libraries for browser - npm package.
  *
@@ -38479,7 +38531,7 @@ module.exports = 'firebase';
 require('./firebase');
 module.exports = firebase;
 
-},{"./firebase":11}],11:[function(require,module,exports){
+},{"./firebase":12}],12:[function(require,module,exports){
 (function (global){
 /*! @license Firebase v3.2.0
     Build: 3.2.0-rc.2
@@ -39047,7 +39099,7 @@ ra.STATE_CHANGED="state_changed";sa.RUNNING="running";sa.PAUSED="paused";sa.SUCC
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
@@ -48863,7 +48915,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}]},{},[4])
+},{}]},{},[5])
 
 
 //# sourceMappingURL=main.js.map

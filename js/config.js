@@ -17,6 +17,11 @@ let config = function($stateProvider, $urlRouterProvider){
 			controller: 'AddCharCtrl as vm',
 			templateUrl: 'templates/add-char.html'
 		})
+		.state('root.edit', {
+			url: '/edit/:id',
+			controller: 'EditCharCtrl as vm',
+			templateUrl: 'templates/edit-char.html'
+		})
 		;
 
 }
