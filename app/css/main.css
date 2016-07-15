@@ -2204,6 +2204,20 @@ a {
 i {
   margin-left: 5px; }
 
+input {
+  padding: 5px; }
+
+/*Nav*/
+#navTitle {
+  margin: 20px 35px; }
+
+/*Dash*/
+#DashEditBtn {
+  color: black; }
+
+#DashBtnWrap {
+  display: inline-block; }
+
 .charWrapper {
   position: relative;
   display: inline-block;
@@ -2223,5 +2237,19 @@ i {
     min-width: 90%;
     min-height: 190px;
     max-height: 190px; }
+
+/*EditChar*/
+#spin {
+  margin: 30px 60px; }
+
+#editName {
+  display: none;
+  margin: 20px 10px 0 35px; }
+
+#editUrl {
+  display: none; }
+
+#editBtn {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */

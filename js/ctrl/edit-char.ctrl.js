@@ -35,18 +35,24 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams){
 				$scope.char = singleChar;
 				// console.log($scope.char);
 
-				$('#editNameBefore').text(singleChar.name);
-				 // $("#inputName").append('<input type="text" placeholder="Name" ng-model="char.name"/>');
-				$('#editUrlBefore').text(singleChar.url);
-				 // $("#inputUrl").append('<input type="text" placeholder="Image URL" ng-model="char.url"/>');
+				$scope.$apply(function(){
+					// $('#editNameBefore').text(singleChar.name);
+					//  $("#inputName").append('<input type="text" placeholder="Name" ng-model="char.name"/>');
+					// $('#editUrlBefore').text(singleChar.url);
+					 // $("#inputUrl").append('<input type="text" placeholder="Image URL" ng-model="char.url"/>');
+					 $('#spin').css('display', 'none');
+					 $('#editName').css('display', 'inline-block');
+					 $('#editUrl').css('display', 'inline-block');
+					 $('#editBtn').css('display', 'inline-block');
+				});
+			
 			}	
 		}
 	}
 
 	function editChar(char){
-		console.log(char);
-		// let item = data.$getRecord(id);
-		// console.log(item);
+		let item = data.$getRecord(id);
+		console.log(item);
 		// // item.name = "Jesse";
 		// data.$save(item).then(function() {
 		// });

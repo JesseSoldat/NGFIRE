@@ -149,18 +149,23 @@ var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams) {
 				$scope.char = singleChar;
 				// console.log($scope.char);
 
-				(0, _jquery2['default'])('#editNameBefore').text(singleChar.name);
-				// $("#inputName").append('<input type="text" placeholder="Name" ng-model="char.name"/>');
-				(0, _jquery2['default'])('#editUrlBefore').text(singleChar.url);
-				// $("#inputUrl").append('<input type="text" placeholder="Image URL" ng-model="char.url"/>');
+				$scope.$apply(function () {
+					// $('#editNameBefore').text(singleChar.name);
+					//  $("#inputName").append('<input type="text" placeholder="Name" ng-model="char.name"/>');
+					// $('#editUrlBefore').text(singleChar.url);
+					// $("#inputUrl").append('<input type="text" placeholder="Image URL" ng-model="char.url"/>');
+					(0, _jquery2['default'])('#spin').css('display', 'none');
+					(0, _jquery2['default'])('#editName').css('display', 'inline-block');
+					(0, _jquery2['default'])('#editUrl').css('display', 'inline-block');
+					(0, _jquery2['default'])('#editBtn').css('display', 'inline-block');
+				});
 			}
 		}
 	}
 
 	function editChar(char) {
-		console.log(char);
-		// let item = data.$getRecord(id);
-		// console.log(item);
+		var item = data.$getRecord(id);
+		console.log(item);
 		// // item.name = "Jesse";
 		// data.$save(item).then(function() {
 		// });

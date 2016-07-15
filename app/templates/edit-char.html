@@ -1,14 +1,14 @@
 <form ng-submit="vm.editChar(char)">
-	<h3 id="editNameBefore"></h3>
+	<!-- <h3 id="editNameBefore"></h3>
 	<div id="inputName"></div>
 
 	<h3 id="editUrlBefore"></h3>
-	<div id="inputUrl"></div> 
-
+	<div id="inputUrl"></div>  -->
+	<i id="spin" class="fa fa-spinner fa-spin fa-3x fa-fw"" aria-hidden="true"></i>
 
 	<input id="editName" type="text" placeholder="Name" ng-model="char.name">
 	<input id="editUrl" type="text" placeholder="Image URL" ng-model="char.url">
-	<button>Edit</button>
+	<button id="editBtn">Edit</button>
 
 
 </form>
