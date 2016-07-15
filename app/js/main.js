@@ -34,13 +34,25 @@ Object.defineProperty(exports, '__esModule', {
 });
 var AddCharCtrl = function AddCharCtrl($firebaseObject) {
 
-	function addChar(id, name, url) {
+	var vm = this;
+	this.addChar = addChar;
+
+	function sendData(id, name, url) {
 		firebase.database().ref('char/' + id).set({
 			name: name,
 			url: url
 		});
 	}
-	addChar('1', 'Jesse', 'Soldat');
+	// addChar('1','Jesse', 'Soldat');
+
+	function addChar(obj) {
+		var id = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+		console.log(id);
+
+		sendData(id, obj.name, obj.url);
+
+		obj = "";
+	}
 };
 AddCharCtrl.$inject = ['$firebaseObject'];
 
@@ -53,16 +65,21 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var DashCtrl = function DashCtrl($firebaseObject) {
+var DashCtrl = function DashCtrl($firebaseObject, $firebaseArray) {
 	var vm = this;
 
 	var ref = firebase.database().ref();
 
-	vm.data = $firebaseObject(ref);
-	console.log(vm.data);
+	var data = $firebaseObject(ref);
+	var array = $firebaseArray(ref);
+
+	console.log(data);
+	console.log(array);
+
+	vm.arr = array;
 };
 
-DashCtrl.$inject = ['$firebaseObject'];
+DashCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
 
 exports['default'] = DashCtrl;
 module.exports = exports['default'];
