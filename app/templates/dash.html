@@ -1,4 +1,9 @@
-<ul ng-repeat="a in array">
-	<li>{{a.name}}</li>
-	<img ng-src="{{a.url}}">
-</ul>
+<div>
+	<div class="charWrapper" ng-repeat="a in array">
+		<h3>{{a.name}}</h3>
+		<button ng-click="deleteChar(a.$id)">Delete</button>
+		<button ng-click="editChar(a.$id)">Edit</button>
+		<img ng-src="{{a.url}}">
+
+	</div>
+</div>

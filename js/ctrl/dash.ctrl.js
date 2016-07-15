@@ -5,16 +5,27 @@ let DashCtrl = function($firebaseObject, $firebaseArray, $scope){
 	var ref = firebase.database().ref();
 
 	
-	$scope.array = $firebaseArray(ref);
+	let data = $firebaseArray(ref);
+	
+	$scope.array = data;
 
 	console.log($scope.array);
 
-	
+	$scope.deleteChar= function(id){
+		var item = data.$getRecord(id);
+		data.$remove(item).then(function(){
+			console.log('deleted');
+		})
+	}
 
-	
-	
+	$scope.editChar = function(id){
+		var item = data.$getRecord(id);
+		item.name = "Jesse";
+		data.$save(item).then(function() {
+	 
+	});
 
-
+	}
 
 	
 

@@ -2198,6 +2198,30 @@ ul li {
   display: inline-block; }
 
 a {
-  text-decoration: none; }
+  text-decoration: none;
+  margin-right: 10px; }
+
+i {
+  margin-left: 5px; }
+
+.charWrapper {
+  position: relative;
+  display: inline-block;
+  width: 33%;
+  max-height: 300px; }
+  .charWrapper h3 {
+    display: inline-block;
+    margin: 15px 15px; }
+  .charWrapper button {
+    display: inline-block;
+    margin: 15px 0px;
+    margin-right: 2px; }
+  .charWrapper img {
+    display: block;
+    margin: 0 auto;
+    max-width: 90%;
+    min-width: 90%;
+    min-height: 190px;
+    max-height: 190px; }
 
 /*# sourceMappingURL=main.css.map */

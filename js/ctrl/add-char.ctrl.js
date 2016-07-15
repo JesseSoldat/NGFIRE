@@ -7,20 +7,18 @@ let AddCharCtrl = function($firebaseObject, $firebaseArray){
 	this.addChar = addChar;
 
 
-	function sendData(id, name, url){
+	function sendData(name, url){
 
 		array.$add({
-		name: name,
-		url: url
+			name: name,
+			url: url
 		});
 
 	}
 
 	function addChar(obj){
-		let id = (Date.now().toString(36) + Math.random().toString(36).substr(2,5)).toUpperCase();
-		
-
-	sendData(id, obj.name, obj.url);
+		// let id = (Date.now().toString(36) + Math.random().toString(36).substr(2,5)).toUpperCase();		
+	sendData(obj.name, obj.url);
 
 	}
 

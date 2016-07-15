@@ -40,7 +40,7 @@ var AddCharCtrl = function AddCharCtrl($firebaseObject, $firebaseArray) {
 	var vm = this;
 	this.addChar = addChar;
 
-	function sendData(id, name, url) {
+	function sendData(name, url) {
 
 		array.$add({
 			name: name,
@@ -49,9 +49,8 @@ var AddCharCtrl = function AddCharCtrl($firebaseObject, $firebaseArray) {
 	}
 
 	function addChar(obj) {
-		var id = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-
-		sendData(id, obj.name, obj.url);
+		// let id = (Date.now().toString(36) + Math.random().toString(36).substr(2,5)).toUpperCase();		
+		sendData(obj.name, obj.url);
 	}
 };
 AddCharCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
@@ -70,9 +69,24 @@ var DashCtrl = function DashCtrl($firebaseObject, $firebaseArray, $scope) {
 
 	var ref = firebase.database().ref();
 
-	$scope.array = $firebaseArray(ref);
+	var data = $firebaseArray(ref);
+
+	$scope.array = data;
 
 	console.log($scope.array);
+
+	$scope.deleteChar = function (id) {
+		var item = data.$getRecord(id);
+		data.$remove(item).then(function () {
+			console.log('deleted');
+		});
+	};
+
+	$scope.editChar = function (id) {
+		var item = data.$getRecord(id);
+		item.name = "Jesse";
+		data.$save(item).then(function () {});
+	};
 };
 
 DashCtrl.$inject = ['$firebaseObject', '$firebaseArray', '$scope'];
