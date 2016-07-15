@@ -12,6 +12,8 @@ import EditCharCtrl from './ctrl/edit-char.ctrl';
 //Config (Router)
 import config from './config';
 
+//Services
+import CharService from './services/char.service';
 
 var appConfig = {
 	apiKey: "AIzaSyBcDhfji5499fBObaKQtVj2fygUdaE0xiI",
@@ -27,6 +29,8 @@ angular
 	.controller('DashCtrl', DashCtrl)
 	.controller('AddCharCtrl', AddCharCtrl)
 	.controller('EditCharCtrl', EditCharCtrl)
+
+	.service('CharService', CharService)
 
 ;
 

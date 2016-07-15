@@ -1,5 +1,14 @@
-<form ng-submit="editChar(array.$id)">
-	<input type="text" placeholder="Name" ng-model="array.name">
-	<input type="text" placeholder="Image URL" ng-model="array.url">
+<form ng-submit="vm.editChar(char)">
+	<h3 id="editNameBefore"></h3>
+	<div id="inputName"></div>
+
+	<h3 id="editUrlBefore"></h3>
+	<div id="inputUrl"></div> 
+
+
+	<input id="editName" type="text" placeholder="Name" ng-model="char.name">
+	<input id="editUrl" type="text" placeholder="Image URL" ng-model="char.url">
 	<button>Edit</button>
+
+
 </form>
