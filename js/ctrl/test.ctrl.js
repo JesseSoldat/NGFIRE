@@ -19,11 +19,17 @@ let TestCtrl = function($firebaseArray, $scope){
 			return true;
 		}
 	}
-
+	
 	ref.child("/counter").transaction(function(currentValue) {
   	return (currentValue || 0) + 1;
 	});
-	console.log(data);
+	// console.log(data);
+	$scope.data.$loaded().then(function() {
+    	console.log($scope.data);
+ 	})
+  .catch(function(err) {
+    console.error(err);
+  });
 	
 
 	

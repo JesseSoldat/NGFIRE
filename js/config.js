@@ -37,6 +37,11 @@ let config = function($stateProvider, $urlRouterProvider){
 			controller: 'ChatCtrl as vm',
 			templateUrl: 'templates/chat.html'
 		})
+		.state('root.sdk', {
+			url: '/sdk',
+			controller: 'SdkCtrl as vm',
+			templateUrl: 'templates/sdk.html'
+		})
 		;
 
 }

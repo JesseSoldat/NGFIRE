@@ -35,6 +35,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
 		url: '/chat',
 		controller: 'ChatCtrl as vm',
 		templateUrl: 'templates/chat.html'
+	}).state('root.sdk', {
+		url: '/sdk',
+		controller: 'SdkCtrl as vm',
+		templateUrl: 'templates/sdk.html'
 	});
 };
 config.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -265,7 +269,7 @@ EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams', '$state'];
 exports['default'] = EditCharCtrl;
 module.exports = exports['default'];
 
-},{"jquery":17}],6:[function(require,module,exports){
+},{"jquery":18}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -277,6 +281,31 @@ exports["default"] = LoginCtrl;
 module.exports = exports["default"];
 
 },{}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var SdkCtrl = function SdkCtrl($scope) {
+	var ref = firebase.database().ref();
+
+	ref.on("value", function (snapshot) {
+		$scope.data = snapshot.val();
+
+		//if the digest is already running run this on the next tick
+		setTimeout(function () {
+			$scope.$apply(function () {
+				$scope.data = snapshot.val();
+			});
+		});
+	});
+};
+SdkCtrl.$inject = ['$scope'];
+
+exports["default"] = SdkCtrl;
+module.exports = exports["default"];
+
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -307,13 +336,18 @@ var TestCtrl = function TestCtrl($firebaseArray, $scope) {
 	ref.child("/counter").transaction(function (currentValue) {
 		return (currentValue || 0) + 1;
 	});
-	console.log(data);
+	// console.log(data);
+	$scope.data.$loaded().then(function () {
+		console.log($scope.data);
+	})["catch"](function (err) {
+		console.error(err);
+	});
 };
 TestCtrl.$inject = ['$firebaseArray', '$scope'];
 exports["default"] = TestCtrl;
 module.exports = exports["default"];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -362,6 +396,10 @@ var _ctrlChatCtrl = require('./ctrl/chat.ctrl');
 
 var _ctrlChatCtrl2 = _interopRequireDefault(_ctrlChatCtrl);
 
+var _ctrlSdkCtrl = require('./ctrl/sdk.ctrl');
+
+var _ctrlSdkCtrl2 = _interopRequireDefault(_ctrlSdkCtrl);
+
 //Config (Router)
 
 var _config = require('./config');
@@ -382,9 +420,9 @@ var appConfig = {
 };
 _firebase2['default'].initializeApp(appConfig);
 
-_angular2['default'].module('app', ['ui.router', 'firebase']).config(_config2['default']).controller('DashCtrl', _ctrlDashCtrl2['default']).controller('AddCharCtrl', _ctrlAddCharCtrl2['default']).controller('EditCharCtrl', _ctrlEditCharCtrl2['default']).controller('TestCtrl', _ctrlTestCtrl2['default']).controller('LoginCtrl', _ctrlLoginCtrl2['default']).controller('ChatCtrl', _ctrlChatCtrl2['default']).service('CharService', _servicesCharService2['default']);
+_angular2['default'].module('app', ['ui.router', 'firebase']).config(_config2['default']).controller('DashCtrl', _ctrlDashCtrl2['default']).controller('AddCharCtrl', _ctrlAddCharCtrl2['default']).controller('EditCharCtrl', _ctrlEditCharCtrl2['default']).controller('TestCtrl', _ctrlTestCtrl2['default']).controller('LoginCtrl', _ctrlLoginCtrl2['default']).controller('ChatCtrl', _ctrlChatCtrl2['default']).controller('SdkCtrl', _ctrlSdkCtrl2['default']).service('CharService', _servicesCharService2['default']);
 
-},{"./config":1,"./ctrl/add-char.ctrl":2,"./ctrl/chat.ctrl":3,"./ctrl/dash.ctrl":4,"./ctrl/edit-char.ctrl":5,"./ctrl/login.ctrl":6,"./ctrl/test.ctrl":7,"./services/char.service":9,"angular":12,"angular-ui-router":10,"angularfire":14,"firebase":15,"jquery":17}],9:[function(require,module,exports){
+},{"./config":1,"./ctrl/add-char.ctrl":2,"./ctrl/chat.ctrl":3,"./ctrl/dash.ctrl":4,"./ctrl/edit-char.ctrl":5,"./ctrl/login.ctrl":6,"./ctrl/sdk.ctrl":7,"./ctrl/test.ctrl":8,"./services/char.service":10,"angular":13,"angular-ui-router":11,"angularfire":15,"firebase":16,"jquery":18}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -408,7 +446,7 @@ CharService.$inject = ['$firebaseArray'];
 exports['default'] = CharService;
 module.exports = exports['default'];
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -4985,7 +5023,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -36459,11 +36497,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":11}],13:[function(require,module,exports){
+},{"./angular":12}],14:[function(require,module,exports){
 /*!
  * AngularFire is the officially supported AngularJS binding for Firebase. Firebase
  * is a full backend so you don't need servers to build your Angular app. AngularFire
@@ -38722,7 +38760,7 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     }
 })();
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // Make sure dependencies are loaded on the window
 require('angular');
 require('firebase');
@@ -38733,7 +38771,7 @@ require('./dist/angularfire');
 // Export the module name from the Angular module
 module.exports = 'firebase';
 
-},{"./dist/angularfire":13,"angular":12,"firebase":15}],15:[function(require,module,exports){
+},{"./dist/angularfire":14,"angular":13,"firebase":16}],16:[function(require,module,exports){
 /**
  *  Firebase libraries for browser - npm package.
  *
@@ -38744,7 +38782,7 @@ module.exports = 'firebase';
 require('./firebase');
 module.exports = firebase;
 
-},{"./firebase":16}],16:[function(require,module,exports){
+},{"./firebase":17}],17:[function(require,module,exports){
 (function (global){
 /*! @license Firebase v3.2.0
     Build: 3.2.0-rc.2
@@ -39312,7 +39350,7 @@ ra.STATE_CHANGED="state_changed";sa.RUNNING="running";sa.PAUSED="paused";sa.SUCC
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
@@ -49128,7 +49166,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}]},{},[8])
+},{}]},{},[9])
 
 
 //# sourceMappingURL=main.js.map

@@ -1,5 +1,5 @@
 <ul>
-      <li ng-repeat="d in data" ng-show="counter(d.$id)">
+      <li ng-repeat="d in data" ng-show="counter(d.$id)" ng-if="!d.from">
         <!-- edit a message -->
         <input ng-model="d.name" ng-change="data.$save(d)" />
         <!-- delete a message -->
@@ -17,5 +17,7 @@
 <div ng-repeat="d in data" ng-show="!counter(d.$id)">
 	<h3>{{d.$id}} {{d.$value}}</h3>	
 </div>
+
+<!-- <pre>{{ data | json }}</pre> -->
 
 

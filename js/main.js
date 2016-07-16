@@ -11,6 +11,7 @@ import EditCharCtrl from './ctrl/edit-char.ctrl';
 import TestCtrl from './ctrl/test.ctrl';
 import LoginCtrl from './ctrl/login.ctrl';
 import ChatCtrl from './ctrl/chat.ctrl';
+import SdkCtrl from './ctrl/sdk.ctrl';
 
 //Config (Router)
 import config from './config';
@@ -35,7 +36,9 @@ angular
 	.controller('TestCtrl', TestCtrl)
 	.controller('LoginCtrl', LoginCtrl)
 	.controller('ChatCtrl', ChatCtrl)
+	.controller('SdkCtrl', SdkCtrl)
 	.service('CharService', CharService)
+
 
 ;
 
