@@ -6,8 +6,7 @@ let CharService = function($http, $firebaseArray){
 
 	this.getChar = getChar;
 
-	function getChar(id){
-		console.log(id);
+	function getChar(){
 		return data;
 
 	}

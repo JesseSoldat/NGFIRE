@@ -11,7 +11,7 @@ var config = function config($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('root', {
 		abstract: true,
 		templateUrl: 'templates/layout.html'
-	}).state('root.home', {
+	}).state('root.dash', {
 		url: '/',
 		controller: 'DashCtrl as vm',
 		templateUrl: 'templates/dash.html'
@@ -36,10 +36,12 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var AddCharCtrl = function AddCharCtrl($firebaseObject, $firebaseArray) {
+var AddCharCtrl = function AddCharCtrl($firebaseArray, $firebaseObject, $state, $scope) {
 	var ref = firebase.database().ref();
 
 	var array = $firebaseArray(ref);
+	var obj = $firebaseObject(ref);
+	obj.$bindTo($scope, "data");
 
 	var vm = this;
 	this.addChar = addChar;
@@ -50,6 +52,7 @@ var AddCharCtrl = function AddCharCtrl($firebaseObject, $firebaseArray) {
 			name: name,
 			url: url
 		});
+		$state.go('root.dash');
 	}
 
 	function addChar(obj) {
@@ -57,7 +60,7 @@ var AddCharCtrl = function AddCharCtrl($firebaseObject, $firebaseArray) {
 		sendData(obj.name, obj.url);
 	}
 };
-AddCharCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
+AddCharCtrl.$inject = ['$firebaseArray', '$firebaseObject', '$state', '$scope'];
 
 exports['default'] = AddCharCtrl;
 module.exports = exports['default'];
@@ -115,7 +118,7 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams) {
+var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams, $state) {
 
 	var vm = this;
 
@@ -126,6 +129,10 @@ var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams) {
 	var ref = firebase.database().ref();
 
 	var data = $firebaseArray(ref);
+
+	//Show only one
+	$scope.temp = $firebaseArray(ref);
+	$scope.tempId = $stateParams.id;
 
 	checkData();
 
@@ -143,11 +150,9 @@ var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams) {
 	//Get the specific character
 	function getOne() {
 		for (var i = 0; i < data.length; i++) {
-			// console.log(data[i].$id);
 			if (data[i].$id === id) {
 				var singleChar = data[i];
 				$scope.char = singleChar;
-				// console.log($scope.char);
 
 				$scope.$apply(function () {
 					// $('#editNameBefore').text(singleChar.name);
@@ -155,24 +160,24 @@ var EditCharCtrl = function EditCharCtrl($firebaseArray, $scope, $stateParams) {
 					// $('#editUrlBefore').text(singleChar.url);
 					// $("#inputUrl").append('<input type="text" placeholder="Image URL" ng-model="char.url"/>');
 					(0, _jquery2['default'])('#spin').css('display', 'none');
-					(0, _jquery2['default'])('#editName').css('display', 'inline-block');
-					(0, _jquery2['default'])('#editUrl').css('display', 'inline-block');
-					(0, _jquery2['default'])('#editBtn').css('display', 'inline-block');
+					// $('#editName').css('display', 'inline-block');
+					// $('#editUrl').css('display', 'inline-block');
+					// $('#editBtn').css('display', 'inline-block');
 				});
 			}
 		}
 	}
 
 	function editChar(char) {
-		var item = data.$getRecord(id);
-		console.log(item);
-		// // item.name = "Jesse";
-		// data.$save(item).then(function() {
-		// });
+		var item = data.$getRecord(char.$id);
+		item.name = char.name;
+		item.url = char.url;
+		data.$save(item).then(function () {
+			$state.go('root.dash');
+		});
 	}
-	// editChar();
 };
-EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams'];
+EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams', '$state'];
 exports['default'] = EditCharCtrl;
 module.exports = exports['default'];
 
@@ -249,8 +254,7 @@ var CharService = function CharService($http, $firebaseArray) {
 
 	this.getChar = getChar;
 
-	function getChar(id) {
-		console.log(id);
+	function getChar() {
 		return data;
 	}
 };

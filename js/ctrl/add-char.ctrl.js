@@ -1,7 +1,9 @@
-let AddCharCtrl = function($firebaseObject, $firebaseArray){
+let AddCharCtrl = function( $firebaseArray, $firebaseObject, $state, $scope){
 	var ref = firebase.database().ref();
 
 	let array = $firebaseArray(ref);
+	let obj = $firebaseObject(ref);
+	obj.$bindTo($scope, "data");
 
 	let vm = this;
 	this.addChar = addChar;
@@ -13,6 +15,7 @@ let AddCharCtrl = function($firebaseObject, $firebaseArray){
 			name: name,
 			url: url
 		});
+		$state.go('root.dash');
 
 	}
 
@@ -23,6 +26,6 @@ let AddCharCtrl = function($firebaseObject, $firebaseArray){
 	}
 
 };
-AddCharCtrl.$inject = ['$firebaseObject', '$firebaseArray'];
+AddCharCtrl.$inject = ['$firebaseArray', '$firebaseObject', '$state', '$scope'];
 
 export default AddCharCtrl;

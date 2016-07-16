@@ -7,7 +7,7 @@ let config = function($stateProvider, $urlRouterProvider){
 			abstract: true,
 			templateUrl: 'templates/layout.html'
 		})
-		.state('root.home', {
+		.state('root.dash', {
 			url: '/',
 			controller: 'DashCtrl as vm',
 			templateUrl: 'templates/dash.html'	

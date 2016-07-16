@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-let EditCharCtrl = function($firebaseArray, $scope, $stateParams){
+let EditCharCtrl = function($firebaseArray, $scope, $stateParams, $state){
 
 	let vm = this;
 
@@ -11,6 +11,10 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams){
 	var ref = firebase.database().ref();
 
 	let data = $firebaseArray(ref);
+
+	//Show only one
+	$scope.temp = $firebaseArray(ref);
+	$scope.tempId = $stateParams.id;
 
 	checkData();
 
@@ -29,11 +33,10 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams){
 	//Get the specific character
 	function getOne(){
 		for(let i = 0; i < data.length ; i++){
-			// console.log(data[i].$id);
 			if(data[i].$id === id) {
 				let singleChar = data[i];
 				$scope.char = singleChar;
-				// console.log($scope.char);
+				
 
 				$scope.$apply(function(){
 					// $('#editNameBefore').text(singleChar.name);
@@ -41,9 +44,9 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams){
 					// $('#editUrlBefore').text(singleChar.url);
 					 // $("#inputUrl").append('<input type="text" placeholder="Image URL" ng-model="char.url"/>');
 					 $('#spin').css('display', 'none');
-					 $('#editName').css('display', 'inline-block');
-					 $('#editUrl').css('display', 'inline-block');
-					 $('#editBtn').css('display', 'inline-block');
+					 // $('#editName').css('display', 'inline-block');
+					 // $('#editUrl').css('display', 'inline-block');
+					 // $('#editBtn').css('display', 'inline-block');
 				});
 			
 			}	
@@ -51,15 +54,17 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams){
 	}
 
 	function editChar(char){
-		let item = data.$getRecord(id);
-		console.log(item);
-		// // item.name = "Jesse";
-		// data.$save(item).then(function() {
-		// });
+		let item = data.$getRecord(char.$id);
+		item.name = char.name;
+		item.url = char.url;
+		data.$save(item).then(function() {
+			$state.go('root.dash');
+		});
+
 	}
-	// editChar();
+	
 
 
 };
-EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams'];
+EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams', '$state'];
 export default EditCharCtrl;
