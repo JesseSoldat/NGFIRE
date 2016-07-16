@@ -1,5 +1,5 @@
 <ul>
-      <li ng-repeat="d in data">
+      <li ng-repeat="d in data" ng-show="counter(d.$id)">
         <!-- edit a message -->
         <input ng-model="d.name" ng-change="data.$save(d)" />
         <!-- delete a message -->
@@ -14,5 +14,8 @@
 
       <button type="submit">Add Character</button>
 </form>
+<div ng-repeat="d in data" ng-show="!counter(d.$id)">
+	<h3>{{d.$id}} {{d.$value}}</h3>	
+</div>
 
 

@@ -10,6 +10,14 @@ let DashCtrl = function($firebaseArray, $scope, $state, CharService){
 	$scope.array = data;
 	// console.log($scope.array);
 
+	$scope.counter = function(id){
+		if(id === "counter"){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	$scope.deleteChar= function(id){
 		var item = data.$getRecord(id);
 		data.$remove(item).then(function(){

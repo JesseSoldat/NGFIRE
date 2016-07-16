@@ -96,6 +96,25 @@ var ChatCtrl = function ChatCtrl($scope, CharService) {
 		});
 		$scope.message = "";
 	};
+	$scope.messages.$loaded(function () {
+		console.log($scope.messages);
+		if ($scope.messages.length === 0) {
+			console.log("You don't have any messages");
+			$scope.messages.$add({
+				from: "Firebase Docs",
+				content: "Hello world!"
+			});
+		} else {
+			console.log("You have some objects");
+			var _length = $scope.messages.length;
+			for (var i = 0; i <= _length; i++) {
+				if (typeof (data[i] === "number")) {
+					// console.log(data[i].name);
+					// console.log("You don't have any messages");
+				}
+			}
+		}
+	});
 };
 
 ChatCtrl.$inject = ["$scope", "CharService"];
@@ -119,6 +138,14 @@ var DashCtrl = function DashCtrl($firebaseArray, $scope, $state, CharService) {
 
 	$scope.array = data;
 	// console.log($scope.array);
+
+	$scope.counter = function (id) {
+		if (id === "counter") {
+			return false;
+		} else {
+			return true;
+		}
+	};
 
 	$scope.deleteChar = function (id) {
 		var item = data.$getRecord(id);
@@ -268,6 +295,19 @@ var TestCtrl = function TestCtrl($firebaseArray, $scope) {
 		$scope.name = "";
 		$scope.url = "";
 	};
+
+	$scope.counter = function (id) {
+		if (id === "counter") {
+			return false;
+		} else {
+			return true;
+		}
+	};
+
+	ref.child("/counter").transaction(function (currentValue) {
+		return (currentValue || 0) + 1;
+	});
+	console.log(data);
 };
 TestCtrl.$inject = ['$firebaseArray', '$scope'];
 exports["default"] = TestCtrl;

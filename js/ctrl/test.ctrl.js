@@ -12,6 +12,20 @@ let TestCtrl = function($firebaseArray, $scope){
 		$scope.url = "";
 	};
 
+	$scope.counter = function(id){
+		if(id === "counter"){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	ref.child("/counter").transaction(function(currentValue) {
+  	return (currentValue || 0) + 1;
+	});
+	console.log(data);
+	
+
 	
 
 };
