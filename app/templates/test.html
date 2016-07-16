@@ -1,0 +1,18 @@
+<ul>
+      <li ng-repeat="d in data">
+        <!-- edit a message -->
+        <input ng-model="d.name" ng-change="data.$save(d)" />
+        <!-- delete a message -->
+
+        <button ng-click="data.$remove(d)">Delete Message</button>
+      </li>
+</ul>
+
+<form ng-submit="addChar()">
+      <input ng-model="name" placeholder="Name" />
+      <input ng-model="url" placeholder="IMG URL" />
+
+      <button type="submit">Add Character</button>
+</form>
+
+

@@ -10,7 +10,7 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams, $state){
 
 	var ref = firebase.database().ref();
 	let data;
-	
+
 	setTimeout(function(){
 		data = $firebaseArray(ref);
 
@@ -26,18 +26,13 @@ let EditCharCtrl = function($firebaseArray, $scope, $stateParams, $state){
 		if(data === undefined) {
 			setTimeout(function(){
 			checkLength();
-
 		},200);
 		} else {
 			$('#spin').css('display', 'none');
 			return
-
 		}
-
 	}
 	
-
-
 	// checkData();
 
 	//Wait for data from firebase

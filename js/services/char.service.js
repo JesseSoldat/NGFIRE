@@ -1,17 +1,16 @@
-let CharService = function($http, $firebaseArray){
+let CharService = function($firebaseArray){
 
 	var ref = firebase.database().ref();
 
-	let data = $firebaseArray(ref);
+	let dataArray = $firebaseArray(ref);
 
-	this.getChar = getChar;
+	this.getArray = getArray;
 
-	function getChar(){
-		return data;
-
+	function getArray(){
+		return dataArray;
 	}
 };
 
-CharService.$inject = ['$http', '$firebaseArray'];
+CharService.$inject = ['$firebaseArray'];
 
 export default CharService;

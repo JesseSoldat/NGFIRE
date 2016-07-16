@@ -2255,4 +2255,7 @@ input {
 #editBtn {
   display: none; }
 
+#chatMessage {
+  display: block; }
+
 /*# sourceMappingURL=main.css.map */

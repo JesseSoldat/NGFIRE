@@ -8,6 +8,9 @@ import $ from 'jquery';
 import DashCtrl from './ctrl/dash.ctrl';
 import AddCharCtrl from './ctrl/add-char.ctrl';
 import EditCharCtrl from './ctrl/edit-char.ctrl';
+import TestCtrl from './ctrl/test.ctrl';
+import LoginCtrl from './ctrl/login.ctrl';
+import ChatCtrl from './ctrl/chat.ctrl';
 
 //Config (Router)
 import config from './config';
@@ -29,7 +32,9 @@ angular
 	.controller('DashCtrl', DashCtrl)
 	.controller('AddCharCtrl', AddCharCtrl)
 	.controller('EditCharCtrl', EditCharCtrl)
-
+	.controller('TestCtrl', TestCtrl)
+	.controller('LoginCtrl', LoginCtrl)
+	.controller('ChatCtrl', ChatCtrl)
 	.service('CharService', CharService)
 
 ;
