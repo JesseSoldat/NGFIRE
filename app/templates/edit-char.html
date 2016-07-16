@@ -15,9 +15,9 @@
 	<h3 ng-if="(tempId === t.$id)">{{t.name}}</h3>
 </div> -->
 <i id="spin" class="fa fa-spinner fa-spin fa-2x fa-fw"" aria-hidden="true"></i>
-<form ng-repeat="t in temp" ng-submit="vm.editChar(char)">
+<form ng-repeat="t in temp" ng-submit="vm.editChar(t)">
 
-	<input ng-if="(tempId === t.$id)"  type="text" placeholder="Name" ng-model="char.name">
-	<input ng-if="(tempId === t.$id)"  type="text" placeholder="Image URL" ng-model="char.url">
-	<button ng-if="(tempId === t.$id)" id="editBtn">Edit</button>
+	<input ng-if="(tempId === t.$id)"  type="text" placeholder="Name" ng-model="t.name">
+	<input ng-if="(tempId === t.$id)"  type="text" placeholder="Image URL" ng-model="t.url">
+	<button ng-if="(tempId === t.$id)">Edit</button>
 </form>
