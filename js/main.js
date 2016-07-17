@@ -18,6 +18,7 @@ import config from './config';
 
 //Services
 import CharService from './services/char.service';
+import LoginService from './services/login.service';
 
 var appConfig = {
 	apiKey: "AIzaSyBcDhfji5499fBObaKQtVj2fygUdaE0xiI",
@@ -37,7 +38,10 @@ angular
 	.controller('LoginCtrl', LoginCtrl)
 	.controller('ChatCtrl', ChatCtrl)
 	.controller('SdkCtrl', SdkCtrl)
+
+
 	.service('CharService', CharService)
+	.service('LoginService', LoginService)
 
 
 ;

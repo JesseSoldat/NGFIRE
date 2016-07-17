@@ -1,13 +1,13 @@
-<form>
-	<input type="text" placeholder="User Name">
-	<input type="text" placeholder="Password">
+<form ng-submit="login(user)">
+	<input type="emai" placeholder="Email" ng-model="user.email1">
+	<input type="text" placeholder="Password" ng-model="user.password1">
 	<button>Login</button>
 </form>
 
 <br><br>
 
-<form>
-	<input type="text" placeholder="User Name">
-	<input type="text" placeholder="Password">
+<form ng-submit="register(user)">
+	<input type="email" placeholder="Email" ng-model="user.email">
+	<input type="text" placeholder="Password" ng-model="user.password">
 	<button>Register</button>
-</form>
+</form> 

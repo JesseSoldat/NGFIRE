@@ -25,7 +25,7 @@ let TestCtrl = function($firebaseArray, $scope){
 	});
 	// console.log(data);
 	$scope.data.$loaded().then(function() {
-    	console.log($scope.data);
+    	// console.log($scope.data);
  	})
   .catch(function(err) {
     console.error(err);
