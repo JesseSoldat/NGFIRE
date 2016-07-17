@@ -5,7 +5,8 @@ let config = function($stateProvider, $urlRouterProvider){
 	$stateProvider
 		.state('root', {
 			abstract: true,
-			templateUrl: 'templates/layout.html'
+			templateUrl: 'templates/layout.html',
+			controller: 'LoginCtrl'
 		})
 		.state('root.login', {
 			url: '/',
@@ -41,6 +42,21 @@ let config = function($stateProvider, $urlRouterProvider){
 			url: '/sdk',
 			controller: 'SdkCtrl as vm',
 			templateUrl: 'templates/sdk.html'
+		})
+		.state('root.profile', {
+			url: '/profile',
+			controller: 'ProfileCtrl as vm',
+			templateUrl: 'templates/profile.html'
+		})
+		.state('root.edit-profile', {
+			url: '/edit-profile',
+			controller: 'EditProfileCtrl as vm',
+			templateUrl: 'templates/edit-profile.html'
+		})
+		.state('root.storage', {
+			url: '/storage',
+			controller: 'StorageCtrl as vm',
+			templateUrl: 'templates/storage.html'
 		})
 		;
 

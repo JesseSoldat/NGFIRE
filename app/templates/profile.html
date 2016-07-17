@@ -1,0 +1,15 @@
+
+<div>
+	<h3>{{user.displayName}}</h3>
+	<img ng-src="{{user.photoURL}}">
+	<ul>
+		<li>{{user.firstName}}</li>
+		<li>{{user.lastName}}</li>
+		<li>{{user.streetAddress}}</li>
+		<li>{{user.city}}</li>
+		<li>{{user.state}}</li>
+		<li>{{user.zip}}</li>
+		<li>{{user.country}}</li>
+	</ul>
+	<button ng-click="editProfile()">Edit</button>
+</div>

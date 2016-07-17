@@ -8,6 +8,17 @@ let AddCharCtrl = function( $firebaseArray, $firebaseObject, $state, $scope){
 	let vm = this;
 	this.addChar = addChar;
 
+	//AUTH
+	var user = firebase.auth().currentUser;
+
+	if (user) {
+	  // User is signed in.
+	  //Note: currentUser might also be null because the auth object has not finished initializing. If you use an observer to keep track of the user's sign-in status, you don't need to handle this case.
+	  console.log(user.uid);
+	} else {
+	  // No user is signed in.
+	}
+
 
 	function sendData(name, url){
 
