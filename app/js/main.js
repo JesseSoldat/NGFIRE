@@ -457,7 +457,7 @@ module.exports = exports["default"];
 Object.defineProperty(exports, '__esModule', {
 	value: true
 });
-var StorageCtrl = function StorageCtrl($scope) {
+var StorageCtrl = function StorageCtrl($scope, $firebaseArray) {
 
 	var storage = firebase.storage();
 
@@ -466,58 +466,120 @@ var StorageCtrl = function StorageCtrl($scope) {
 	//Delete a File
 	$scope.deleteFile = function (file) {};
 
-	// Download a File
+	// Create an Array of files URLs to download from the Database img section
+	var ref = firebase.database().ref('img/');
+	var data = $firebaseArray(ref);
+	var imgArray2 = [];
+
+	var urlArray = [];
+
+	checkLength();
+
+	function checkLength() {
+		if (data.length === 0) {
+			setTimeout(function () {
+				checkLength();
+			}, 200);
+		} else {
+			for (var i = 0; i < data.length; i++) {
+				imgArray2.push(data[i].name);
+			}
+			// console.log(imgArray2);
+			showPictures();
+			return;
+		}
+	}
+	// Create an Array of files URLs to download from the Database img section
+
+	//Use the newly created array to get the URLs for Firebase Storage
+	function showPictures() {
+		for (var i = 0; i < imgArray2.length; i++) {
+			storageRef.child(imgArray2[i]).getDownloadURL().then(function (url) {
+				urlArray.push(url);
+				console.log(urlArray);
+
+				$scope.$apply(function () {
+					$scope.url = urlArray;
+				});
+			})['catch'](function (error) {
+				switch (error.code) {
+					case 'storage/object_not_found':
+						console.log("not found");
+						// File doesn't exist
+						break;
+
+					case 'storage/unauthorized':
+						// User doesn't have permission to access the object
+						console.log('unauthorized');
+						break;
+
+					case 'storage/canceled':
+						// User canceled the upload
+						console.log('canceled');
+						break;
+
+					case 'storage/unknown':
+						// Unknown error occurred, inspect the server response
+						console.log('unknown error');
+						break;
+				}
+			});
+		}
+	}
+	//Use the newly created array to get the URLs for Firebase Storage
 
 	//LOOP TEST //
 	var imgArray = ['costarica04.jpg', 'costarica07.jpg', 'costarica08.jpg', 'costarica13.jpg', 'costarica12.jpg'];
 
-	var urlArray = [];
+	// let urlArray = [];
 
-	for (var i = 0; i < imgArray.length; i++) {
-		// console.log(imgArray[i]);
+	// for(let i = 0; i < imgArray.length; i++) {
+	// 	// console.log(imgArray[i]);
 
-		storageRef.child(imgArray[i]).getDownloadURL().then(function (url) {
+	// 	storageRef.child(imgArray[i]).getDownloadURL().then(function(url) {
 
-			urlArray.push(url);
-			// console.log(urlArray);
-			// console.log('Length:' + imgArray.length);
-			// console.log('index: ' + i);
+	// 		urlArray.push(url);
+	// 		// console.log(urlArray);
+	// 		// console.log('Length:' + imgArray.length);
+	// 		// console.log('index: ' + i);
 
-			$scope.$apply(function () {
-				$scope.url = urlArray;
-			});
+	// 		$scope.$apply(function(){
+	// 			$scope.url = urlArray;
 
-			// if((imgArray.length -1) === i){
+	// 			});
 
-			// 	$scope.$apply(function(){
-			// 	$scope.url = urlArray;
+	// if((imgArray.length -1) === i){
 
-			// 	});
-			// }
-		})['catch'](function (error) {
-			switch (error.code) {
-				case 'storage/object_not_found':
-					console.log("not found");
-					// File doesn't exist
-					break;
+	// 	$scope.$apply(function(){
+	// 	$scope.url = urlArray;
 
-				case 'storage/unauthorized':
-					// User doesn't have permission to access the object
-					console.log('unauthorized');
-					break;
+	// 	});
+	// }
 
-				case 'storage/canceled':
-					// User canceled the upload
-					console.log('canceled');
-					break;
+	// }).catch(function(error) {
+	//   switch (error.code) {
+	// 	    case 'storage/object_not_found':
+	// 	    	console.log("not found");
+	// 	      // File doesn't exist
+	// 	      break;
 
-				case 'storage/unknown':
-					// Unknown error occurred, inspect the server response
-					console.log('unknown error');
-					break;
-			}
-		});
-	}
+	// 	    case 'storage/unauthorized':
+	// 	      // User doesn't have permission to access the object
+	// 	      console.log('unauthorized');
+	// 	      break;
+
+	// 	    case 'storage/canceled':
+	// 	      // User canceled the upload
+	// 	      console.log('canceled');
+	// 	      break;
+
+	// 	    case 'storage/unknown':
+	// 	      // Unknown error occurred, inspect the server response
+	// 	      console.log('unknown error');
+	// 	      break;
+	// 	  }
+	// });
+	// }
 	//LOOP TEST FINISHED//
 
 	// storageRef.child('costarica04.jpg').getDownloadURL().then(function(url) {
@@ -580,7 +642,7 @@ var StorageCtrl = function StorageCtrl($scope) {
 	// 	  }
 	// });
 };
-StorageCtrl.$inject = ['$scope'];
+StorageCtrl.$inject = ['$scope', '$firebaseArray'];
 
 exports['default'] = StorageCtrl;
 module.exports = exports['default'];
@@ -852,7 +914,7 @@ var StorageService = function StorageService($firebaseArray) {
 
 			});
 		}
-		//////////////////////
+
 		// data.$add({
 		// 	name: file.name,
 		// 	url: uploadTask

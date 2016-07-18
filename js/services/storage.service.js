@@ -30,7 +30,7 @@ let StorageService = function($firebaseArray){
 				
 	  		});
 		}
-//////////////////////
+
 		// data.$add({
 		// 	name: file.name,
 		// 	url: uploadTask
