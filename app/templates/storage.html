@@ -1,12 +1,12 @@
 <h3>Upload a file</h3>
 <file-upload></file-upload>
-<div id="storageImgWrapper">
+<div>
 	<h3>Costa Rica</h3>
-	<img ng-src="{{costarica04}}"
-	>	
-	<img ng-src="{{costarica07}}"
-	>	
+	<br>
+</div>
 
+<div class="storageImgWrapper" ng-repeat="u in url">
+	<img ng-src="{{u}}">
 </div>
 
 
