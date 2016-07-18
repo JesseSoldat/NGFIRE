@@ -1,6 +1,6 @@
 let AddCharCtrl = function( $firebaseArray, $firebaseObject, $state, $scope){
 	var ref = firebase.database().ref();
-
+	
 	let array = $firebaseArray(ref);
 	let obj = $firebaseObject(ref);
 	obj.$bindTo($scope, "data");
