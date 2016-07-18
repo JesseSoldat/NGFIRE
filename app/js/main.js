@@ -316,7 +316,7 @@ EditCharCtrl.$inject = ['$firebaseArray', '$scope', '$stateParams', '$state'];
 exports['default'] = EditCharCtrl;
 module.exports = exports['default'];
 
-},{"jquery":22}],6:[function(require,module,exports){
+},{"jquery":24}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -463,10 +463,38 @@ var StorageCtrl = function StorageCtrl($scope) {
 
 	var storageRef = storage.ref();
 
+	// Download a File
 	storageRef.child('costarica04.jpg').getDownloadURL().then(function (url) {
-		console.log(url);
 		$scope.$apply(function () {
 			$scope.costarica04 = url.toString();
+		});
+	})['catch'](function (error) {
+		switch (error.code) {
+			case 'storage/object_not_found':
+				console.log("not found");
+				// File doesn't exist
+				break;
+
+			case 'storage/unauthorized':
+				// User doesn't have permission to access the object
+				console.log('unauthorized');
+				break;
+
+			case 'storage/canceled':
+				// User canceled the upload
+				console.log('canceled');
+				break;
+
+			case 'storage/unknown':
+				// Unknown error occurred, inspect the server response
+				console.log('unknown error');
+				break;
+		}
+	});
+	//Second Image
+	storageRef.child('costarica07.jpg').getDownloadURL().then(function (url) {
+		$scope.$apply(function () {
+			$scope.costarica07 = url.toString();
 		});
 	})['catch'](function (error) {
 		switch (error.code) {
@@ -540,6 +568,37 @@ exports["default"] = TestCtrl;
 module.exports = exports["default"];
 
 },{}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+var fileUpload = function fileUpload(StorageService) {
+	return {
+		restrict: 'E',
+		replace: true,
+		scope: {
+			file: '=image'
+		},
+		template: '\n\t\t<div>\n\t\t\t<form>\n\t\t\t\t<input type="file" name="img" accept="image/*" ng-model="image.one" placeholder="Choose a File" />\n\t\t\t\t<button id="addPhotosBtn">Submit</button>\n\t\t\t</form>\n\t\t\t<hr>\n\t\t</div>\n\t\t',
+		link: function link(scope, element, attrs, ctrl) {
+			element.on('click', function () {
+				var submit = angular.element(document.querySelector('#addPhotosBtn'));
+			});
+			element.on('submit', function () {
+				var file = element.find('input')[0].files[0];
+				StorageService.uploadImg(file);
+			});
+		}
+	};
+};
+
+fileUpload.$inject = ['StorageService'];
+
+exports['default'] = fileUpload;
+module.exports = exports['default'];
+
+},{}],13:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -620,6 +679,16 @@ var _servicesLoginService = require('./services/login.service');
 
 var _servicesLoginService2 = _interopRequireDefault(_servicesLoginService);
 
+var _servicesStorageService = require('./services/storage.service');
+
+var _servicesStorageService2 = _interopRequireDefault(_servicesStorageService);
+
+//Directives
+
+var _directivesFileUploadDirective = require('./directives/file-upload.directive');
+
+var _directivesFileUploadDirective2 = _interopRequireDefault(_directivesFileUploadDirective);
+
 var appConfig = {
 	apiKey: "AIzaSyBcDhfji5499fBObaKQtVj2fygUdaE0xiI",
 	authDomain: "angularfire-ab896.firebaseapp.com",
@@ -628,9 +697,9 @@ var appConfig = {
 };
 _firebase2['default'].initializeApp(appConfig);
 
-_angular2['default'].module('app', ['ui.router', 'firebase']).config(_config2['default']).controller('DashCtrl', _ctrlDashCtrl2['default']).controller('AddCharCtrl', _ctrlAddCharCtrl2['default']).controller('EditCharCtrl', _ctrlEditCharCtrl2['default']).controller('TestCtrl', _ctrlTestCtrl2['default']).controller('LoginCtrl', _ctrlLoginCtrl2['default']).controller('ChatCtrl', _ctrlChatCtrl2['default']).controller('SdkCtrl', _ctrlSdkCtrl2['default']).controller('ProfileCtrl', _ctrlProfileCtrl2['default']).controller('EditProfileCtrl', _ctrlEditProfileCtrl2['default']).controller('StorageCtrl', _ctrlStorageCtrl2['default']).service('CharService', _servicesCharService2['default']).service('LoginService', _servicesLoginService2['default']);
+_angular2['default'].module('app', ['ui.router', 'firebase']).config(_config2['default']).controller('DashCtrl', _ctrlDashCtrl2['default']).controller('AddCharCtrl', _ctrlAddCharCtrl2['default']).controller('EditCharCtrl', _ctrlEditCharCtrl2['default']).controller('TestCtrl', _ctrlTestCtrl2['default']).controller('LoginCtrl', _ctrlLoginCtrl2['default']).controller('ChatCtrl', _ctrlChatCtrl2['default']).controller('SdkCtrl', _ctrlSdkCtrl2['default']).controller('ProfileCtrl', _ctrlProfileCtrl2['default']).controller('EditProfileCtrl', _ctrlEditProfileCtrl2['default']).controller('StorageCtrl', _ctrlStorageCtrl2['default']).service('CharService', _servicesCharService2['default']).service('LoginService', _servicesLoginService2['default']).service('StorageService', _servicesStorageService2['default']).directive('fileUpload', _directivesFileUploadDirective2['default']);
 
-},{"./config":1,"./ctrl/add-char.ctrl":2,"./ctrl/chat.ctrl":3,"./ctrl/dash.ctrl":4,"./ctrl/edit-char.ctrl":5,"./ctrl/edit-profile.ctrl":6,"./ctrl/login.ctrl":7,"./ctrl/profile.ctrl":8,"./ctrl/sdk.ctrl":9,"./ctrl/storage.ctrl":10,"./ctrl/test.ctrl":11,"./services/char.service":13,"./services/login.service":14,"angular":17,"angular-ui-router":15,"angularfire":19,"firebase":20,"jquery":22}],13:[function(require,module,exports){
+},{"./config":1,"./ctrl/add-char.ctrl":2,"./ctrl/chat.ctrl":3,"./ctrl/dash.ctrl":4,"./ctrl/edit-char.ctrl":5,"./ctrl/edit-profile.ctrl":6,"./ctrl/login.ctrl":7,"./ctrl/profile.ctrl":8,"./ctrl/sdk.ctrl":9,"./ctrl/storage.ctrl":10,"./ctrl/test.ctrl":11,"./directives/file-upload.directive":12,"./services/char.service":14,"./services/login.service":15,"./services/storage.service":16,"angular":19,"angular-ui-router":17,"angularfire":21,"firebase":22,"jquery":24}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -654,7 +723,7 @@ CharService.$inject = ['$firebaseArray'];
 exports['default'] = CharService;
 module.exports = exports['default'];
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -687,7 +756,40 @@ LoginService.$inject = ['$rootScope'];
 exports['default'] = LoginService;
 module.exports = exports['default'];
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+	value: true
+});
+var StorageService = function StorageService() {
+
+	var storageRef = firebase.storage().ref();
+
+	this.uploadImg = uploadImg;
+
+	function uploadImg(file) {
+
+		var imgRef = storageRef.child(file.name);
+
+		var uploadTask = imgRef.put(file);
+
+		uploadTask.on('state_changed', function (snapshot) {
+			// console.log(snapshot);
+		}, function (error) {
+			console.log(error);
+		}, function () {
+			var downloadURL = uploadTask.snapshot.downloadURL;
+			// console.log(downloadURL);
+		});
+	}
+};
+StorageService.$inject = [];
+
+exports['default'] = StorageService;
+module.exports = exports['default'];
+
+},{}],17:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -5264,7 +5366,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -36738,11 +36840,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":16}],18:[function(require,module,exports){
+},{"./angular":18}],20:[function(require,module,exports){
 /*!
  * AngularFire is the officially supported AngularJS binding for Firebase. Firebase
  * is a full backend so you don't need servers to build your Angular app. AngularFire
@@ -39001,7 +39103,7 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     }
 })();
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // Make sure dependencies are loaded on the window
 require('angular');
 require('firebase');
@@ -39012,7 +39114,7 @@ require('./dist/angularfire');
 // Export the module name from the Angular module
 module.exports = 'firebase';
 
-},{"./dist/angularfire":18,"angular":17,"firebase":20}],20:[function(require,module,exports){
+},{"./dist/angularfire":20,"angular":19,"firebase":22}],22:[function(require,module,exports){
 /**
  *  Firebase libraries for browser - npm package.
  *
@@ -39023,7 +39125,7 @@ module.exports = 'firebase';
 require('./firebase');
 module.exports = firebase;
 
-},{"./firebase":21}],21:[function(require,module,exports){
+},{"./firebase":23}],23:[function(require,module,exports){
 (function (global){
 /*! @license Firebase v3.2.0
     Build: 3.2.0-rc.2
@@ -39591,7 +39693,7 @@ ra.STATE_CHANGED="state_changed";sa.RUNNING="running";sa.PAUSED="paused";sa.SUCC
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.4
  * http://jquery.com/
@@ -49407,7 +49509,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}]},{},[12])
+},{}]},{},[13])
 
 
 //# sourceMappingURL=main.js.map

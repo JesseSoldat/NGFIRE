@@ -2258,4 +2258,8 @@ input {
 #chatMessage {
   display: block; }
 
+/*STORAGE*/
+#storageImgWrapper img {
+  width: 32%; }
+
 /*# sourceMappingURL=main.css.map */

@@ -22,6 +22,10 @@ import config from './config';
 //Services
 import CharService from './services/char.service';
 import LoginService from './services/login.service';
+import StorageService from './services/storage.service';
+
+//Directives
+import fileUpload from './directives/file-upload.directive';
 
 var appConfig = {
 	apiKey: "AIzaSyBcDhfji5499fBObaKQtVj2fygUdaE0xiI",
@@ -47,6 +51,9 @@ angular
 
 	.service('CharService', CharService)
 	.service('LoginService', LoginService)
+	.service('StorageService', StorageService)
+
+	.directive('fileUpload', fileUpload)
 
 
 ;
